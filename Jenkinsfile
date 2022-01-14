@@ -5,15 +5,15 @@ node {
     def app_name = "nodejs-simple-app"
 
 	def app
-	stage("clone"){
+	stage("SCM Checkout"){
 		checkout scm
 	}
 
-	stage("build"){
+	stage("Build Docker Image"){
 		app = docker.build("${docker_id}/${app_name}:${env.BUILD_ID}")
 	}
 
-	stage("test"){
+	stage("Integration Test"){
 		app.inside {
             sh "npm --prefix ./ run test"
             sh "echo 'running addional test'"
@@ -21,14 +21,14 @@ node {
 		}
 	}
 
-	stage("push"){
+	stage("Push Docker Image"){
 		docker.withRegistry("${docker_registry}", "${docker_credential}"){
 			app.push("${env.BUILD_ID}") // push images with new tag to docker hub
 			app.push("latest") // change the latest tag to it
 		}
     }
 
-	stage("deploy"){
+	stage("Deploy"){
         try {
             // kill app_name if it is running
             sh "echo Kill ${app_name} if it is running"
