@@ -2,7 +2,7 @@ node {
     def docker_registry = "https://registry.hub.docker.com"
     def docker_credential = "docker"
     def docker_id = "19120694"
-    def app_name = "test-img"
+    def app_name = "nodejs-simple-app"
 
 	def app
 	stage("clone"){
