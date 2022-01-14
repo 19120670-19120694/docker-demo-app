@@ -1,6 +1,6 @@
 node {
     def docker_registry = "https://registry.hub.docker.com"
-    def docker_credential = "docker"
+    def docker_credential = "docker-hub"
     def docker_id = "19120694"
     def app_name = "nodejs-simple-app"
 
